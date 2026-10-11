@@ -1,0 +1,576 @@
+<!--
+Created by Fanbingqi
+Created at: 2026-10-11 18:47:00 Asia/Shanghai
+Purpose: Present Fan Bingqi's professional profile in one accessible, responsive page.
+Necessity: The dedicated About Me project needs a concrete reviewable page without a build system.
+Problem: The initial repository had no web content for evaluating experience, products, or availability.
+Solution/Approach: Use semantic HTML and embedded responsive CSS with exact supplied facts and public links.
+-->
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Fan Bingqi — Senior Software Engineer specializing in C++, Go/PostgreSQL, Swift, and WebRTC/P2P.">
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%2315231f'/%3E%3Ctext x='32' y='42' text-anchor='middle' font-family='Arial,sans-serif' font-size='28' font-weight='700' fill='%23fffdf7'%3EFB%3C/text%3E%3C/svg%3E">
+  <title>Fan Bingqi — Senior Software Engineer</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #15231f;
+      --muted: #53635d;
+      --paper: #f7f4ec;
+      --surface: #fffdf7;
+      --line: #d9ded8;
+      --accent: #0b6759;
+      --accent-dark: #074a41;
+      --highlight: #dcebe2;
+      --warm: #e78b57;
+      --shadow: 0 24px 60px rgba(29, 45, 39, 0.09);
+      --radius: 1.25rem;
+      font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(circle at 10% 8%, rgba(231, 139, 87, 0.16), transparent 28rem),
+        linear-gradient(180deg, #f4f1e7 0%, var(--paper) 35%, #edf3ed 100%);
+      font-size: 1rem;
+      line-height: 1.65;
+    }
+
+    a {
+      color: var(--accent-dark);
+      text-decoration-thickness: 0.09em;
+      text-underline-offset: 0.2em;
+    }
+
+    a:hover { color: var(--accent); }
+
+    a:focus-visible {
+      outline: 3px solid var(--warm);
+      outline-offset: 4px;
+      border-radius: 0.2rem;
+    }
+
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.75rem;
+      left: 0.75rem;
+      padding: 0.65rem 0.9rem;
+      border-radius: 0.5rem;
+      background: var(--ink);
+      color: white;
+      transform: translateY(-180%);
+    }
+
+    .skip-link:focus { transform: translateY(0); }
+
+    .shell {
+      width: min(72rem, calc(100% - 2rem));
+      margin-inline: auto;
+    }
+
+    .site-header { padding: 1.1rem 0; }
+
+    .nav {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+    }
+
+    .wordmark {
+      color: var(--ink);
+      font-weight: 800;
+      letter-spacing: -0.04em;
+      text-decoration: none;
+    }
+
+    .nav-links {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+      gap: 0.55rem 1rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      font-size: 0.9rem;
+      font-weight: 650;
+    }
+
+    main { padding: 3rem 0 4rem; }
+
+    .hero {
+      display: grid;
+      grid-template-columns: minmax(0, 1.35fr) minmax(17rem, 0.65fr);
+      gap: clamp(2rem, 5vw, 5rem);
+      align-items: end;
+      min-height: 32rem;
+      padding: clamp(2rem, 5vw, 4.5rem);
+      overflow: hidden;
+      border: 1px solid rgba(11, 103, 89, 0.18);
+      border-radius: calc(var(--radius) * 1.4);
+      background: rgba(255, 253, 247, 0.86);
+      box-shadow: var(--shadow);
+    }
+
+    .eyebrow,
+    .section-kicker {
+      margin: 0 0 0.7rem;
+      color: var(--accent);
+      font-size: 0.78rem;
+      font-weight: 800;
+      letter-spacing: 0.14em;
+      text-transform: uppercase;
+    }
+
+    h1, h2, h3, p { overflow-wrap: anywhere; }
+
+    h1 {
+      max-width: 12ch;
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(3rem, 8vw, 6.6rem);
+      font-weight: 500;
+      letter-spacing: -0.065em;
+      line-height: 0.92;
+    }
+
+    .role {
+      margin: 1.5rem 0 0;
+      color: var(--muted);
+      font-size: clamp(1.15rem, 2.5vw, 1.55rem);
+    }
+
+    .hero-copy {
+      margin: 1.2rem 0 0;
+      max-width: 44rem;
+      color: var(--muted);
+      font-size: 1.05rem;
+    }
+
+    .hero-meta {
+      position: relative;
+      padding: 1.6rem;
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: #edf4f0;
+    }
+
+    .hero-meta::before {
+      content: "";
+      position: absolute;
+      width: 7rem;
+      height: 0.35rem;
+      top: 0;
+      left: 1.6rem;
+      background: var(--warm);
+    }
+
+    .hero-meta dl { margin: 0; }
+
+    .hero-meta div + div {
+      margin-top: 1rem;
+      padding-top: 1rem;
+      border-top: 1px solid rgba(255, 255, 255, 0.14);
+    }
+
+    .hero-meta dt {
+      color: #aebfb8;
+      font-size: 0.74rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+
+    .hero-meta dd {
+      margin: 0.25rem 0 0;
+      font-weight: 650;
+    }
+
+    .hero-meta a { color: white; }
+
+    .section {
+      padding-top: clamp(4rem, 9vw, 7rem);
+      scroll-margin-top: 1rem;
+    }
+
+    .section-head {
+      display: grid;
+      grid-template-columns: minmax(0, 0.7fr) minmax(0, 1.3fr);
+      gap: 2rem;
+      align-items: start;
+      margin-bottom: 2rem;
+    }
+
+    h2 {
+      margin: 0;
+      font-family: Georgia, "Times New Roman", serif;
+      font-size: clamp(2.2rem, 5vw, 4rem);
+      font-weight: 500;
+      letter-spacing: -0.045em;
+      line-height: 1;
+    }
+
+    .section-intro {
+      margin: 0;
+      color: var(--muted);
+      font-size: 1.08rem;
+    }
+
+    .skill-list {
+      display: grid;
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+      gap: 0.8rem;
+      margin: 0;
+      padding: 0;
+      list-style: none;
+    }
+
+    .skill-list li {
+      padding: 1.4rem 1rem;
+      border: 1px solid var(--line);
+      border-radius: 1rem;
+      background: rgba(255, 253, 247, 0.62);
+      font-size: clamp(1.05rem, 2vw, 1.35rem);
+      font-weight: 800;
+      text-align: center;
+    }
+
+    .cards {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 1rem;
+    }
+
+    .card {
+      display: flex;
+      flex-direction: column;
+      min-height: 20rem;
+      padding: clamp(1.5rem, 3vw, 2.3rem);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+      box-shadow: 0 14px 34px rgba(28, 46, 39, 0.055);
+    }
+
+    .card-number {
+      margin: 0 0 auto;
+      color: var(--warm);
+      font-size: 0.78rem;
+      font-weight: 850;
+      letter-spacing: 0.12em;
+    }
+
+    h3 {
+      margin: 2.5rem 0 0.65rem;
+      font-size: clamp(1.35rem, 3vw, 1.85rem);
+      letter-spacing: -0.035em;
+      line-height: 1.15;
+    }
+
+    .card p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .card-link {
+      align-self: flex-start;
+      margin-top: 1.4rem;
+      font-weight: 750;
+    }
+
+    .loginlib {
+      margin-top: 1rem;
+      padding: clamp(1.5rem, 4vw, 2.7rem);
+      border-radius: var(--radius);
+      background: var(--highlight);
+    }
+
+    .loginlib h3 { margin: 0 0 0.6rem; }
+
+    .loginlib p {
+      max-width: 58rem;
+      margin: 0;
+      color: #354c43;
+    }
+
+    .timeline {
+      margin: 0;
+      padding: 0;
+      list-style: none;
+      border-top: 1px solid var(--line);
+    }
+
+    .timeline li {
+      display: grid;
+      grid-template-columns: minmax(8rem, 0.32fr) minmax(0, 1fr);
+      gap: 2rem;
+      padding: 2rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .timeline time,
+    .timeline .period {
+      color: var(--accent);
+      font-size: 0.85rem;
+      font-weight: 800;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+
+    .timeline h3 { margin: 0 0 0.5rem; }
+
+    .timeline p {
+      margin: 0;
+      color: var(--muted);
+    }
+
+    .contribution {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 1.5rem;
+      align-items: center;
+      padding: clamp(1.5rem, 4vw, 2.5rem);
+      border-radius: var(--radius);
+      background: var(--ink);
+      color: white;
+    }
+
+    .contribution h3 { margin: 0 0 0.45rem; }
+
+    .contribution p {
+      margin: 0;
+      color: #b9c8c2;
+    }
+
+    .status {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.55rem;
+      white-space: nowrap;
+      color: #f8dbca;
+      font-size: 0.8rem;
+      font-weight: 850;
+      letter-spacing: 0.08em;
+    }
+
+    .status::before {
+      content: "";
+      width: 0.65rem;
+      height: 0.65rem;
+      border-radius: 50%;
+      background: var(--warm);
+      box-shadow: 0 0 0 0.35rem rgba(231, 139, 87, 0.16);
+    }
+
+    .contribution a {
+      color: white;
+      font-weight: 750;
+    }
+
+    .contact-panel {
+      display: grid;
+      grid-template-columns: minmax(0, 1.15fr) minmax(16rem, 0.85fr);
+      gap: clamp(2rem, 5vw, 4rem);
+      align-items: center;
+      padding: clamp(2rem, 6vw, 4.5rem);
+      border-radius: calc(var(--radius) * 1.4);
+      background: var(--accent);
+      color: white;
+    }
+
+    .contact-panel h2 { max-width: 12ch; }
+
+    .contact-panel p {
+      margin: 1rem 0 0;
+      color: #d4e8e2;
+    }
+
+    .contact-panel .contact-kicker { color: #f8dbca; }
+
+    .contact-links {
+      display: grid;
+      gap: 0.75rem;
+    }
+
+    .contact-links a {
+      display: block;
+      padding: 0.95rem 1rem;
+      border: 1px solid rgba(255, 255, 255, 0.34);
+      border-radius: 0.75rem;
+      color: white;
+      font-weight: 750;
+      text-decoration: none;
+    }
+
+    .contact-links a:hover { background: rgba(255, 255, 255, 0.1); }
+
+    footer {
+      padding: 2rem 0 3rem;
+      color: var(--muted);
+      font-size: 0.88rem;
+    }
+
+    @media (max-width: 52rem) {
+      .hero, .section-head, .contact-panel { grid-template-columns: 1fr; }
+      .hero { min-height: 0; }
+      .skill-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+    }
+
+    @media (max-width: 38rem) {
+      .shell { width: min(100% - 1.25rem, 72rem); }
+      .site-header { padding-bottom: 0.5rem; }
+      .nav { align-items: flex-start; }
+      .nav-links li:nth-child(2),
+      .nav-links li:nth-child(3) { display: none; }
+      main { padding-top: 1rem; }
+      .hero { padding: 1.5rem; }
+      .cards, .skill-list { grid-template-columns: 1fr; }
+      .card { min-height: 17rem; }
+      .timeline li, .contribution {
+        grid-template-columns: 1fr;
+        gap: 0.75rem;
+      }
+      .status { white-space: normal; }
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main-content">Skip to main content</a>
+  <header class="site-header">
+    <nav class="nav shell" aria-label="Primary navigation">
+      <a class="wordmark" href="#top" aria-label="Fan Bingqi, back to top">FB.</a>
+      <ul class="nav-links">
+        <li><a href="#work">Work</a></li>
+        <li><a href="#experience">Experience</a></li>
+        <li><a href="#open-source">Open source</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ul>
+    </nav>
+  </header>
+
+  <main id="main-content" class="shell">
+    <section id="top" class="hero" aria-labelledby="page-title">
+      <div>
+        <p class="eyebrow">Senior Software Engineer · Liaocheng, China</p>
+        <h1 id="page-title">Fan Bingqi</h1>
+        <p class="role">Senior Software Engineer with 9+ years total software experience.</p>
+        <p class="hero-copy">I work most deeply with C++, Go/PostgreSQL, Swift, and WebRTC/P2P—turning complicated product boundaries into software that stays direct, stable, and understandable.</p>
+      </div>
+      <aside class="hero-meta" aria-label="Availability">
+        <dl>
+          <div><dt>Based in</dt><dd>Liaocheng, Shandong, China</dd></div>
+          <div><dt>Engagement</dt><dd>Long-term individual contractor</dd></div>
+          <div><dt>Availability</dt><dd>40h/week · 08:00–22:00 Beijing<br>(00:00–14:00 UTC)</dd></div>
+          <div><dt>Start</dt><dd>Week of 12 October 2026</dd></div>
+          <div><dt>Email</dt><dd><a href="mailto:bingqi.fan@gmail.com">bingqi.fan@gmail.com</a></dd></div>
+        </dl>
+      </aside>
+    </section>
+
+    <section class="section" aria-labelledby="strengths-title">
+      <div class="section-head">
+        <div><p class="section-kicker">Core strengths</p><h2 id="strengths-title">Working close to the hard parts.</h2></div>
+        <p class="section-intro">My strongest stacks span low-level systems, dependable backend services, native Apple development, and real-time peer-to-peer communication.</p>
+      </div>
+      <ul class="skill-list" aria-label="Strongest technical stacks">
+        <li>C++</li><li>Go / PostgreSQL</li><li>Swift</li><li>WebRTC / P2P</li>
+      </ul>
+    </section>
+
+    <section id="work" class="section" aria-labelledby="work-title">
+      <div class="section-head">
+        <div><p class="section-kicker">Independent products</p><h2 id="work-title">Four Kyrifix products.</h2></div>
+        <p class="section-intro">Each product has its own user problem and architecture, supported by shared account and entitlement infrastructure where the boundary genuinely belongs.</p>
+      </div>
+      <div class="cards">
+        <article class="card">
+          <p class="card-number">01 / CONTROL</p><h3>Kyrifix Control</h3>
+          <p>iPhone-to-Mac WebRTC streaming and input, with session recovery for resilient remote control.</p>
+          <a class="card-link" href="https://kyrifix.com/">Visit Kyrifix Control <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="card">
+          <p class="card-number">02 / CAPTION</p><h3>Kyrifix Caption</h3>
+          <p>Real-time captions and offline subtitles, using WebRTC APM and sherpa-onnx.</p>
+          <a class="card-link" href="https://kyrifix.com/caption/">Visit Kyrifix Caption <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="card">
+          <p class="card-number">03 / DICTIONARY</p><h3>Kyrifix Dictionary</h3>
+          <p>Clear helper/main-process boundaries, persistence, and CloudKit-backed data behavior.</p>
+          <a class="card-link" href="https://kyrifix.com/dictionary/">Visit Kyrifix Dictionary <span aria-hidden="true">↗</span></a>
+        </article>
+        <article class="card">
+          <p class="card-number">04 / DREAM PRACTICE</p><h3>Kyrifix for Lucid Dream Practice</h3>
+          <p>iOS/watchOS journaling with offline-first storage, messages, and encrypted backup.</p>
+          <a class="card-link" href="https://kyrifix.com/practice/">Visit Lucid Dream Practice <span aria-hidden="true">↗</span></a>
+        </article>
+      </div>
+      <article class="loginlib">
+        <h3>Shared foundation: LoginLib</h3>
+        <p>A shared Swift SDK and Go/PostgreSQL backend covering authentication, sessions, application-scoped subscription entitlements, resources with version rollback, and updates.</p>
+      </article>
+    </section>
+
+    <section id="experience" class="section" aria-labelledby="experience-title">
+      <div class="section-head">
+        <div><p class="section-kicker">Selected experience</p><h2 id="experience-title">From payments to real-time systems.</h2></div>
+        <p class="section-intro">More than nine years of total software experience across product development, maintenance, debugging, and platform boundaries.</p>
+      </div>
+      <ol class="timeline">
+        <li>
+          <time datetime="2022">2022–2024</time>
+          <div><h3>Shunwang · Cloud PC / Gaming C++ SDK</h3><p>Software encoding optimization, SDK debugging, module permissions, virtual printing, and P2P.</p></div>
+        </li>
+        <li>
+          <time datetime="2019">2019–2021</time>
+          <div><h3>Inspur · Java / Spring</h3><p>KubeSphere Helm service templates and instance creation.</p></div>
+        </li>
+        <li>
+          <span class="period">Earlier work</span>
+          <div><h3>Payments, refunds, scheduling, and crawling</h3><p>Java/Vue payment and refund systems. In 2018, a Flask WeChat course-scheduling backend; later, a crawler system. Together, over one year of development and maintenance.</p></div>
+        </li>
+      </ol>
+    </section>
+
+    <section id="open-source" class="section" aria-labelledby="open-source-title">
+      <div class="section-head">
+        <div><p class="section-kicker">Open source</p><h2 id="open-source-title">Contribution in review.</h2></div>
+        <p class="section-intro">Public engineering work is linked directly so its discussion and current status can be evaluated at the source.</p>
+      </div>
+      <article class="contribution">
+        <div><h3>Envoy PR #48074</h3><p><a href="https://github.com/envoyproxy/envoy/pull/48074">View the pull request and discussion <span aria-hidden="true">↗</span></a></p></div>
+        <span class="status">OPEN / UNDER REVIEW</span>
+      </article>
+    </section>
+
+    <section id="contact" class="section" aria-labelledby="contact-title">
+      <div class="contact-panel">
+        <div>
+          <p class="section-kicker contact-kicker">Contact</p>
+          <h2 id="contact-title">Let’s build reliable software.</h2>
+          <p>Available for a long-term individual contract, 40 hours per week, starting the week of 12 October 2026.</p>
+        </div>
+        <div class="contact-links" aria-label="Contact and public profiles">
+          <a href="mailto:bingqi.fan@gmail.com">bingqi.fan@gmail.com</a>
+          <a href="https://github.com/CapricornFBQ">GitHub · CapricornFBQ <span aria-hidden="true">↗</span></a>
+          <a href="https://www.linkedin.com/in/bingqifan/">LinkedIn · Bingqi Fan <span aria-hidden="true">↗</span></a>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer><div class="shell">Fan Bingqi · Senior Software Engineer · Liaocheng, Shandong, China</div></footer>
+</body>
+</html>
